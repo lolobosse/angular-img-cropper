@@ -1274,8 +1274,41 @@ angular.module('angular-img-cropper').directive("imgCropperFileread", ['$timeout
                 var reader = new FileReader();
                 reader.onload = function (loadEvent) {
                     $timeout(function () {
-                        scope.image = loadEvent.target.result;
-                    }, 0);
+                        var mock = new Image();
+                        mock.src = loadEvent.target.result;
+                        mock.onload = function () {
+                            console.log(mock.width);
+                            console.log(mock.height);
+                            if (4 * mock.width != 3 * mock.height) {
+                                var canvas = document.createElement('canvas');
+                                imageIsTooHigh = mock.width < mock.height;
+                                console.log('Too high:', imageIsTooHigh);
+                                if (imageIsTooHigh){
+                                    canvas.width = (4/3)*mock.height;
+                                    canvas.height = mock.height;
+                                }
+                                else{
+                                    canvas.width = mock.width;
+                                    canvas.height = (3/4) * mock.width;
+                                }
+                                var ctx=canvas.getContext("2d");
+                                ctx.fillStyle = "white";
+                                ctx.rect(0, 0, canvas.width, canvas.height);
+                                ctx.fill();
+                                if (!imageIsTooHigh){
+                                    ctx.drawImage(mock, 0, (canvas.height/ 2) - (mock.height/2))
+                                }
+                                else{
+                                    ctx.drawImage(mock, (canvas.width/ 2) - (mock.width/2), 0)
+                                }
+                                console.log(canvas.toDataURL());
+                                console.log(scope);
+                                scope.image = canvas.toDataURL();
+                                scope.$apply();
+                                console.log("Until scope");
+                            }
+                        };
+                    }, 1000);
                 };
                 if (changeEvent.target.files[0]) {
                     reader.readAsDataURL(changeEvent.target.files[0]);
