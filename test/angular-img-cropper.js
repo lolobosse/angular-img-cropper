@@ -1282,7 +1282,6 @@ angular.module('angular-img-cropper').directive("imgCropperFileread", ['$timeout
                             if (4 * mock.width != 3 * mock.height) {
                                 var canvas = document.createElement('canvas');
                                 imageIsTooHigh = mock.width < mock.height;
-                                console.log('Too high:', imageIsTooHigh);
                                 if (imageIsTooHigh){
                                     canvas.width = (4/3)*mock.height;
                                     canvas.height = mock.height;
@@ -1301,11 +1300,8 @@ angular.module('angular-img-cropper').directive("imgCropperFileread", ['$timeout
                                 else{
                                     ctx.drawImage(mock, (canvas.width/ 2) - (mock.width/2), 0)
                                 }
-                                console.log(canvas.toDataURL());
-                                console.log(scope);
                                 scope.image = canvas.toDataURL();
                                 scope.$apply();
-                                console.log("Until scope");
                             }
                         };
                     }, 1000);
