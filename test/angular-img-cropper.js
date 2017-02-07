@@ -1285,9 +1285,9 @@ angular.module('angular-img-cropper', []).directive("imageCropper", ['$document'
                 var touchRadius = scope.touchRadius;
                 var oldImage = crop && crop.srcImage;
 
-                crop = new ImageCropper(canvas, canvas.width / 2 - width / 2, canvas.height / 2 - height / 2, width, height, keepAspect, touchRadius);
+              crop = new ImageCropper(canvas, canvas.width / 2 - width / 2, canvas.height / 2 - height / 2, width, height, keepAspect, touchRadius);
 
-                $(canvas).data('crop.angular-img-cropper', crop);
+              angular.element(canvas).data('crop.angular-img-cropper', crop);
 
                 if (oldImage) {
                     crop.setImage(oldImage);
