@@ -1281,7 +1281,7 @@ angular.module('angular-img-cropper').directive("imgCropperFileread", ['$timeout
                             console.log(mock.height);
                             if (4 * mock.width != 3 * mock.height) {
                                 var canvas = document.createElement('canvas');
-                                imageIsTooHigh = mock.width < mock.height;
+                                imageIsTooHigh = mock.width / mock.height < (4/3);
                                 if (imageIsTooHigh){
                                     canvas.width = (4/3)*mock.height;
                                     canvas.height = mock.height;
